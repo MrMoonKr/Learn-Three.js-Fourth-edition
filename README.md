@@ -1,10 +1,29 @@
-# Learn-Three.js-Fourth-edition
-Learn Three.js, Fourth edition, published by Packt
+# Learn Three.js Fourth Edition
 
+Learn Three.js, Fourth edition, published by Packt
 
 <a href="https://www.packtpub.com/product/learn-three.js-fourth-edition/9781803233871"><img src="https://static.packt-cdn.com/products/9781803233871/cover/smaller" alt="Learn Three.js, Fourth edition" height="256px" align="right"></a>
 
 This is the code repository for [Learn Three.js, Fourth edition](https://www.packtpub.com/product/learn-three.js-fourth-edition/9781803233871), published by Packt.
+
+
+## 개발환경
+- VS Code
+- Live Server
+- Webpack
+
+## 디버깅
+
+- npm run build.dev
+- Go Live - 웹서버 기동
+- F5 - 디버깅 시작
+- 테스트하고자 하는 페이지 열기
+- Break Point 설정
+- 즐거운 디버깅
+
+
+
+
 
 **Program 3D animations and visualizations for the web with JavaScript and WebGL**
 
