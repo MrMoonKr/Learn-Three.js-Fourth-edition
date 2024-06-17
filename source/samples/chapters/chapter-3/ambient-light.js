@@ -21,7 +21,7 @@ const loadWaterfall = (scene) => {
   })
 }
 
-initScene(props)(({ scene, camera, renderer, orbitControls }) => {
+initScene( props )( ( { scene, camera, renderer, orbitControls } ) => {
   camera.position.set(-7, 2, 5)
   orbitControls.update()
 
