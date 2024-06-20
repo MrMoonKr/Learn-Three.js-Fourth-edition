@@ -3,6 +3,12 @@ import Stats from "three/examples/jsm/libs/stats.module";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import GUI from "lil-gui";
 
+import * as SPECTOR from "spectorjs";
+
+//const spector = new SPECTOR.Spector();
+//spector.displayUI( document.body, { theme: "dark" } );
+//spector.spyCanvases();
+
 // Note: This is just a getting started example. For the other examples
 // we reuse the basic components by extracting them to a set of common
 // JavaScript modules / files.
@@ -31,6 +37,8 @@ renderer.shadowMap.type = THREE.VSMShadowMap;
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0xffffff);
 document.body.appendChild(renderer.domElement);
+
+//spector.captureCanvas(renderer.domElement);
 
 // add lights
 scene.add(new THREE.AmbientLight(0x666666));
@@ -106,6 +114,9 @@ gui.add(props, 'cubeSpeed', -0.2, 0.2, 0.01)
 gui.add(props, 'torusSpeed', -0.2, 0.2, 0.01)
 
 renderer.render(scene, camera);
+
+const spector = new SPECTOR.Spector();
+spector.displayUI( document.body, { theme: "dark" } );
 
 // render the scene
 let step = 0;
