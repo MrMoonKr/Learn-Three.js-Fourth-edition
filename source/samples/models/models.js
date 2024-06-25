@@ -1,23 +1,40 @@
-import * as THREE from 'three'
+import * as THREE from 'three' ;
+
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { visitChildren } from '../util/modelUtil'
 import * as BufferGeometryUtils from 'three/examples/jsm/utils/BufferGeometryUtils'
 
-const loader = new GLTFLoader()
+import { visitChildren } from '../util/modelUtil'
 
-export const sampleCube = (material, size) => {
-  const s = size ?? 1
-  const cubeGeom = new THREE.BoxGeometry(s, s, s, 10, 10, 10)
-  const cubeMesh = new THREE.Mesh(cubeGeom, material)
 
-  return cubeMesh
+const loader = new GLTFLoader() ;
+
+
+/**
+ * 
+ * @param {THREE.Material} material 
+ * @param {number} size 
+ * @returns 
+ */
+export const sampleCube = ( material, size ) => {
+    const s = size ?? 1
+
+    const cubeGeom = new THREE.BoxGeometry( s, s, s, 10, 10, 10 ) ;
+    const cubeMesh = new THREE.Mesh( cubeGeom, material ) ;
+
+    return cubeMesh ;
 }
 
-export const sampleSphere = (material) => {
-  const floatingSphereGeom = new THREE.SphereBufferGeometry(1, 16, 12)
-  const floatingSphereMesh = new THREE.Mesh(floatingSphereGeom, material)
+/**
+ * 
+ * @param {THREE.Material} material 
+ * @returns 
+ */
+export const sampleSphere = ( material ) => {
 
-  return floatingSphereMesh
+    const floatingSphereGeom = new THREE.SphereGeometry( 1, 16, 12 ) ;
+    const floatingSphereMesh = new THREE.Mesh( floatingSphereGeom, material ) ;
+
+    return floatingSphereMesh ;
 }
 
 export const sampleGosper = (material) => {
@@ -43,7 +60,7 @@ export const sampleGosper = (material) => {
 }
 
 export const sampleKnot = (material) => {
-  const knotGeom = new THREE.TorusKnotBufferGeometry(2, 0.4, 200, 30, 2, 3)
+  const knotGeom = new THREE.TorusGeometry( 2, 0.4, 200, 30 )
   const knotMesh = new THREE.Mesh(knotGeom, material)
 
   knotMesh.receiveShadow = true

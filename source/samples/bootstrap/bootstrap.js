@@ -26,7 +26,7 @@ export const initScene = ( { backgroundColor, fogColor, disableShadows, disableL
      */
     /**
      * 
-     * @param {function(InitResult)} fn 
+     * @param {function(InitResult)} fn 초기화함수
      */
     const init = ( fn ) => {
 

@@ -1,59 +1,66 @@
 import * as THREE from "three";
 
 const enums = {
-  toneMappingOptions: {
-    None: THREE.NoToneMapping,
-    Linear: THREE.LinearToneMapping,
-    Reinhard: THREE.ReinhardToneMapping,
-    Cineon: THREE.CineonToneMapping,
-    ACESFilmic: THREE.ACESFilmicToneMapping,
-    Custom: THREE.CustomToneMapping,
-  },
-  shadowMapping: {
-    Basic: THREE.BasicShadowMap,
-    PCFS: THREE.PCFShadowMap,
-    PCFSoft: THREE.PCFSoftShadowMap,
-    VSM: THREE.VSMShadowMap,
-  },
-  outputEncodings: {
-    Linear: THREE.LinearEncoding,
-    sRGB: THREE.sRGBEncoding,
-  },
-};
+    toneMappingOptions: {
+        None: THREE.NoToneMapping,
+        Linear: THREE.LinearToneMapping,
+        Reinhard: THREE.ReinhardToneMapping,
+        Cineon: THREE.CineonToneMapping,
+        ACESFilmic: THREE.ACESFilmicToneMapping,
+        Custom: THREE.CustomToneMapping,
+    },
+    shadowMapping: {
+        Basic: THREE.BasicShadowMap,
+        PCFS: THREE.PCFShadowMap,
+        PCFSoft: THREE.PCFSoftShadowMap,
+        VSM: THREE.VSMShadowMap,
+    },
+    outputEncodings: {
+        Linear: THREE.LinearEncoding,
+        sRGB: THREE.sRGBEncoding,
+    },
+} ;
 
-const getPropertyHolder = (webGLRenderer) => {
-  const clearColorHolder = new THREE.Color();
-  webGLRenderer.getClearColor(clearColorHolder);
 
-  const holder = {
-    main: {
-      outputEncoding: webGLRenderer.outputEncoding,
-    },
-    shadowMap: {
-      enabled: webGLRenderer.shadowMap.enabled,
-      autoUpdate: webGLRenderer.shadowMap.autoUpdate,
-      needsUpdate: () => (webGLRenderer.shadowMap.needsUpdate = true),
-      type: webGLRenderer.shadowMap.type,
-    },
-    toneMapping: {
-      exposure: webGLRenderer.toneMappingExposure,
-      toneMapping: webGLRenderer.toneMapping,
-    },
-    clearSettings: {
-      autoClear: webGLRenderer.autoClear,
-      clearColor: clearColorHolder.getStyle(),
-    },
-    advanced: {
-      autoClearDepth: webGLRenderer.autoClearDepth,
-      autoClearStencil: webGLRenderer.autoClearStencil,
-      checkShaderErrors: webGLRenderer.debug.checkShaderErrors,
-      sortObjects: webGLRenderer.sortObjects,
-      localClippingEnabled: webGLRenderer.localClippingEnabled,
-      physicallyCorrectLights: webGLRenderer.physicallyCorrectLights,
-    },
-  };
+/**
+ * 
+ * @param {THREE.WebGLRenderer} webGLRenderer 
+ * @returns 
+ */
+const getPropertyHolder = ( webGLRenderer ) => {
+ 
+    const clearColorHolder = new THREE.Color();
+    webGLRenderer.getClearColor( clearColorHolder );
 
-  return holder;
+    const holder = {
+        main: {
+            outputEncoding: webGLRenderer.outputEncoding,
+        },
+        shadowMap: {
+            enabled: webGLRenderer.shadowMap.enabled,
+            autoUpdate: webGLRenderer.shadowMap.autoUpdate,
+            needsUpdate: () => ( webGLRenderer.shadowMap.needsUpdate = true ),
+            type: webGLRenderer.shadowMap.type,
+        },
+        toneMapping: {
+            exposure: webGLRenderer.toneMappingExposure,
+            toneMapping: webGLRenderer.toneMapping,
+        },
+        clearSettings: {
+            autoClear: webGLRenderer.autoClear,
+            clearColor: clearColorHolder.getStyle(),
+        },
+        advanced: {
+            autoClearDepth: webGLRenderer.autoClearDepth,
+            autoClearStencil: webGLRenderer.autoClearStencil,
+            checkShaderErrors: webGLRenderer.debug.checkShaderErrors,
+            sortObjects: webGLRenderer.sortObjects,
+            localClippingEnabled: webGLRenderer.localClippingEnabled,
+            physicallyCorrectLights: webGLRenderer.physicallyCorrectLights,
+        },
+    };
+
+    return holder;
 };
 
 export const intializeRendererControls = (gui, webGLRenderer) => {
