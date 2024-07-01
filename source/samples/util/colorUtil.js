@@ -6,8 +6,8 @@ import * as THREE from 'three' ;
  * @returns {THREE.Color}
  */
 export const randomColor = () => {
-    var r = Math.random() ;
+    let r = Math.random() ;
     let g = Math.random() ;
     let b = Math.random() ;
-    return new THREE.Color( r, g, b )
+    return new THREE.Color( r, g, b ) ;
 }

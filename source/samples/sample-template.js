@@ -6,10 +6,10 @@ import { initializeHelperControls } from './controls/helpers-control'
 import GUI from 'lil-gui'
 
 const props = {
-  backgroundColor: 0xffffff,
-  // fogColor: 0xfff6bc
-  fogColor: 0xffffff
-}
+    backgroundColor: 0xffffff,
+    // fogColor: 0xfff6bc
+    fogColor: 0xffffff
+} ;
 
 // const props = {
 //   backgroundColor: 0x111111,
@@ -17,7 +17,8 @@ const props = {
 //   fogColor: 0xffffff
 // }
 
-const gui = new GUI()
+const gui = new GUI() ;
+
 
 initScene(props)(({ scene, camera, renderer, orbitControls }) => {
   const geometry = new THREE.BoxGeometry()
@@ -29,7 +30,7 @@ initScene(props)(({ scene, camera, renderer, orbitControls }) => {
   cube.castShadow = true
   scene.add(cube)
 
-  const torusKnotGeom = new THREE.TorusKnotBufferGeometry(0.5, 0.2, 100, 100)
+  const torusKnotGeom = new THREE.TorusKnotGeometry(0.5, 0.2, 100, 100)
   const torusKnotMat = new THREE.MeshStandardMaterial({
     color: 0x00ff88,
     roughness: 0.1
