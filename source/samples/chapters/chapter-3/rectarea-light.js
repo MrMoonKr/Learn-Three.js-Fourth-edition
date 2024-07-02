@@ -8,88 +8,125 @@ import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLigh
 import { stats } from '../../util/stats'
 import { visitChildren } from '../../util/modelUtil.js'
 
-const props = {
-  backgroundColor: 0xcccccc,
-  disableLights: true
-}
-const gui = new GUI()
 
-const loadIsland = (scene) => {
-  const loader = new GLTFLoader()
-  loader.load('/assets/gltf/flying_island/scene.gltf', (loadedObject) => {
-    // the nested
-    const loadedScene = loadedObject.scene.children[0].children[0].children[0]
-    visitChildren(loadedScene, (c) => {
-      c.receiveShadow = true
-      c.castShadow = true
-    })
-    loadedScene.scale.set(0.012, 0.012, 0.012)
-    loadedScene.translateY(-3)
-    scene.add(loadedScene)
-  })
+/**
+ * 씬 초기화 옵션
+ */
+const props = {
+    backgroundColor: 0xcccccc,
+    disableLights: true
+} ;
+
+const gui = new GUI() ;
+
+
+/**
+ * 
+ * @param {THREE.Scene} scene 
+ */
+const loadIsland = ( scene ) => {
+
+    const loader = new GLTFLoader() ;
+    loader.load( '/assets/gltf/flying_island/scene.gltf', ( loadedObject ) => {
+        // the nested
+        const loadedScene = loadedObject.scene.children[ 0 ].children[ 0 ].children[ 0 ]
+        visitChildren( loadedScene, ( c ) => {
+            c.receiveShadow = true ;
+            c.castShadow = true ;
+        } ) ;
+
+        loadedScene.scale.set( 0.012, 0.012, 0.012 ) ;
+        loadedScene.translateY( -3 ) ;
+
+        scene.add( loadedScene ) ;
+
+        const cloned = loadedScene.clone( true ) ;
+        cloned.position.set( - 5, 0, 5 ) ;
+        scene.add( cloned ) ;
+    } ) ;
 }
 
 // TODO: Add the rotation and position controls here, that we've
 //       seen earlier, to allow us to move the lights around.
-initScene(props)(({ scene, camera, renderer, orbitControls }) => {
-  camera.position.set(2, 7, -7)
-  orbitControls.update()
-  const floor = floatingFloor(scene, 10)
-  floor.material.metalness = 0.2
-  floor.material.roughness = 0.1
+initScene( props )( ( { scene, camera, renderer, orbitControls } ) => {
 
-  const colorHolder = new THREE.Color(0x666666)
-  const light = new THREE.AmbientLight(colorHolder, 1)
-  scene.add(light)
-
-  loadIsland(scene)
-
-  RectAreaLightUniformsLib.init()
-
-  const rectLight1 = new THREE.RectAreaLight(0xff0000, 5, 2, 5)
-  const color1Holder = { color: rectLight1.color.getStyle() }
-  rectLight1.position.set(-3, 0, 5)
-  scene.add(rectLight1)
-
-  const rectLight2 = new THREE.RectAreaLight(0x00ff00, 5, 2, 5)
-  const color2Holder = { color: rectLight2.color.getStyle() }
-  rectLight2.position.set(0, 0, 5)
-  scene.add(rectLight2)
-
-  const rectLight3 = new THREE.RectAreaLight(0x0000ff, 5, 2, 5)
-  const color3Holder = { color: rectLight3.color.getStyle() }
-  rectLight3.position.set(3, 0, 5)
-  scene.add(rectLight3)
-
-  scene.add(new RectAreaLightHelper(rectLight1))
-  scene.add(new RectAreaLightHelper(rectLight2))
-  scene.add(new RectAreaLightHelper(rectLight3))
-
-  function animate() {
-    requestAnimationFrame(animate)
-    renderer.render(scene, camera)
-    stats.update()
-
+    camera.position.set( 2, 7, -10 )
     orbitControls.update()
-  }
 
-  setupRectGui(color1Holder, rectLight1, 'rect-light-1')
-  setupRectGui(color2Holder, rectLight2, 'rect-light-2')
-  setupRectGui(color3Holder, rectLight3, 'rect-light-3')
-  animate()
-})
+    const floor = floatingFloor( scene, 20 ) ;
+    floor.position.y += -1.5 ;
+    floor.material.metalness = 0.2
+    floor.material.roughness = 0.1
 
-function setupRectGui(colorHolder, light, folderName) {
-  const rectAreaFolder = gui.addFolder(folderName)
-  rectAreaFolder.addColor(colorHolder, 'color').onChange((c) => light.color.setStyle(c))
-  rectAreaFolder.add(light, 'intensity', 0, 15, 0.1)
-  rectAreaFolder.add(light, 'decay', 0, 5, 0.01)
-  rectAreaFolder.add(light, 'width', 0, 20, 0.01)
-  rectAreaFolder.add(light, 'height', 0, 20, 0.01)
-  rectAreaFolder.add(light.position, 'x', -30, 30, 0.1).name('positionX')
-  rectAreaFolder.add(light.position, 'y', -30, 30, 0.1).name('positionY')
-  rectAreaFolder.add(light.position, 'z', -30, 30, 0.1).name('positionZ')
-  rectAreaFolder.add(light.rotation, 'x', -2 * Math.PI, 2 * Math.PI, 0.1).name('rotationX')
-  rectAreaFolder.add(light.rotation, 'y', -2 * Math.PI, 2 * Math.PI, 0.1).name('rotationY')
-  rectAreaFolder.add(light.rotation, 'z', -2 * Math.PI, 2 * Math.PI, 0.1).name('rotationZ')
+    const colorHolder = new THREE.Color( 0x666666 )
+    const light = new THREE.AmbientLight( colorHolder, 1 )
+    scene.add( light )
+
+    loadIsland( scene ) ;
+
+    RectAreaLightUniformsLib.init()
+
+    const rectLight1 = new THREE.RectAreaLight( 0xff0000, 5, 2, 5 )
+    const color1Holder = {
+        color: rectLight1.color.getStyle()
+    }
+    rectLight1.position.set( -3, 0, 5 )
+    scene.add( rectLight1 )
+
+    const rectLight2 = new THREE.RectAreaLight( 0x00ff00, 5, 2, 5 )
+    const color2Holder = {
+        color: rectLight2.color.getStyle()
+    }
+    rectLight2.position.set( 0, 0, 5 )
+    scene.add( rectLight2 )
+
+    const rectLight3 = new THREE.RectAreaLight( 0x0000ff, 5, 2, 5 )
+    const color3Holder = {
+        color: rectLight3.color.getStyle()
+    }
+    rectLight3.position.set( 3, 0, 5 )
+    scene.add( rectLight3 )
+
+    scene.add( new RectAreaLightHelper( rectLight1 ) ) ;
+    scene.add( new RectAreaLightHelper( rectLight2 ) ) ;
+    scene.add( new RectAreaLightHelper( rectLight3 ) ) ;
+
+    function animate() {
+        requestAnimationFrame( animate ) ;
+
+        renderer.render( scene, camera ) ;
+        stats.update() ;
+
+        orbitControls.update() ;
+    }
+
+    setupRectGui( color1Holder, rectLight1, 'rect-light-1' ) ;
+    setupRectGui( color2Holder, rectLight2, 'rect-light-2' ) ;
+    setupRectGui( color3Holder, rectLight3, 'rect-light-3' ) ;
+
+    animate() ;
+
+} ) ;
+
+
+/**
+ * @param {Object} colorHolder GUI 컨텍스트
+ * @param {string} colorHolder.color 라이트 색상
+ * @param {THREE.RectAreaLight} light 대상 라이트
+ * @param {string} folderName GUI 항목
+ */
+function setupRectGui( colorHolder, light, folderName ) {
+
+    const rectAreaFolder = gui.addFolder( folderName ) ;
+    rectAreaFolder.addColor( colorHolder, 'color' ).onChange( ( c ) => light.color.setStyle( c ) ) ;
+    rectAreaFolder.add( light, 'intensity', 0, 15, 0.1 ) ;
+    rectAreaFolder.add( light, 'decay', 0, 5, 0.01 ) ;
+    rectAreaFolder.add( light, 'width', 0, 20, 0.01 ) ;
+    rectAreaFolder.add( light, 'height', 0, 20, 0.01 ) ;
+    rectAreaFolder.add( light.position, 'x', -30, 30, 0.1 ).name( 'positionX' ) ;
+    rectAreaFolder.add( light.position, 'y', -30, 30, 0.1 ).name( 'positionY' ) ;
+    rectAreaFolder.add( light.position, 'z', -30, 30, 0.1 ).name( 'positionZ' ) ;
+    rectAreaFolder.add( light.rotation, 'x', -2 * Math.PI, 2 * Math.PI, 0.1 ).name( 'rotationX' ) ;
+    rectAreaFolder.add( light.rotation, 'y', -2 * Math.PI, 2 * Math.PI, 0.1 ).name( 'rotationY' ) ;
+    rectAreaFolder.add( light.rotation, 'z', -2 * Math.PI, 2 * Math.PI, 0.1 ).name( 'rotationZ' ) ;
 }
